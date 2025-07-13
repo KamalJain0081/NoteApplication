@@ -1,0 +1,31 @@
+🔐 AuthController
+POST   http://localhost:8580/auth/signup       # Create new user
+POST   http://localhost:8580/auth/login        # Authenticate user
+POST   http://localhost:8580/auth/refresh      # Refresh JWT token
+
+-------------------------------------------------------------------------------------
+👤 UserController
+PUT    http://localhost:8580/user/update       # Update user info
+GET    http://localhost:8580/user/profile      # Fetch user profile
+
+-------------------------------------------------------------------------------------
+📝 NoteController
+POST   http://localhost:8580/notes/create      # Create a new note
+PUT    http://localhost:8580/notes/update      # Update note content/title
+DELETE http://localhost:8580/notes/delete      # Delete note
+POST   http://localhost:8580/notes/share       # Share note with other users
+PUT    http://localhost:8580/notes/notify      # Set notification for note
+POST   http://localhost:8580/notes/comments    # Add comment to a note
+
+-------------------------------------------------------------------------------------
+👥 GroupController
+POST   http://localhost:8580/groups/create     # Create new group
+POST   http://localhost:8580/groups/join       # Add user to group
+DELETE http://localhost:8580/groups/remove     # Remove user from group
+GET    http://localhost:8580/groups/list       # List groups user belongs to
+
+-------------------------------------------------------------------------------------
+🔔 NotificationController
+POST   http://localhost:8580/notifications/create   # Create notification
+PUT    http://localhost:8580/notifications/update   # Update notification status
+GET    http://localhost:8580/notifications/list     # List user notifications
