@@ -1,5 +1,7 @@
 package com.utilityMethods;
 
+import org.springframework.stereotype.Component;
+
 /*
  
 Step 1: Character shifting by position + key
@@ -12,6 +14,7 @@ Step 4: Character reordering (odd/even shuffle)
  
 */
 
+@Component
 public class SecureCipher {
 
     private static final String SECRET_KEY = "SecurityCipher#062025"; 
