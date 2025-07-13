@@ -1,0 +1,74 @@
+🧱 DB Script
+
+-- Users Table
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    isActive BOOLEAN DEFAULT TRUE
+);
+-- Not added the last active place column as we are handling it from the frontend side.
+
+-- Groups Table
+CREATE TABLE groups (
+    group_id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    created_by INTEGER REFERENCES users(user_id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Notes Table
+CREATE TABLE notes (
+    note_id SERIAL PRIMARY KEY,
+    note_title VARCHAR(255),
+    content TEXT,
+    notification BOOLEAN DEFAULT FALSE,
+    group_id INTEGER REFERENCES groups(group_id),
+    note_color VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    isPublic BOOLEAN DEFAULT FALSE
+);
+
+-- Group Members Table
+CREATE TABLE group_members (
+    group_member_id SERIAL PRIMARY KEY,
+    group_id INTEGER REFERENCES groups(group_id),
+    user_id INTEGER REFERENCES users(user_id),
+    added_by INTEGER REFERENCES users(user_id),
+    member_color VARCHAR(50),
+    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Comments Table
+CREATE TABLE comments (
+    comment_id SERIAL PRIMARY KEY,
+    note_id INTEGER REFERENCES notes(note_id),
+    user_id INTEGER REFERENCES users(user_id),
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- UserNotes Table
+CREATE TABLE user_notes (
+    user_note_id SERIAL PRIMARY KEY,
+    note_id INTEGER REFERENCES notes(note_id),
+    user_id INTEGER REFERENCES users(user_id),
+    shared_with INTEGER[] DEFAULT '{}',
+    notify_users INTEGER[] DEFAULT '{}',
+    notification_at TIMESTAMP
+);
+
+-- Notification Table
+CREATE TABLE notifications (
+    notification_id SERIAL PRIMARY KEY,
+    notification_data TEXT,
+    receiver_id INTEGER REFERENCES users(user_id),
+    sender_id INTEGER REFERENCES users(user_id),
+    delivery_status VARCHAR(20) DEFAULT 'PENDING',
+    delivery_time TIMESTAMP
+);

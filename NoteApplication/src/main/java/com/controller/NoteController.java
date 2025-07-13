@@ -6,11 +6,11 @@ import com.service.NoteServiceInterface;
 
 @RestController
 @RequestMapping("note")
-public class NoteRepository 
+public class NoteController 
 {
 	private NoteServiceInterface noteService;
 	
-	public NoteRepository(NoteServiceInterface noteService) 
+	public NoteController(NoteServiceInterface noteService) 
 	{
 		this.noteService = noteService;
 	}
