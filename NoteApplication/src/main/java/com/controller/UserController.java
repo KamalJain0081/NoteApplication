@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.service.UserServiceInterface;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("user/")
 public class UserController 
 {
 	private final UserServiceInterface userService;
