@@ -34,7 +34,7 @@ public class Note {
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
-    @Column(name = "isPublic", columnDefinition = "BOOLEAN DEFAULT FALSE")
+    @Column(name = "is_Public", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private Boolean isPublic = false;
 
     // Constructors
