@@ -28,8 +28,10 @@ public class AuthController {
 		resultMap = userService.createUser(userReqDto);
 
 		if (resultMap.containsKey(ResultStatus.SUCCESS.toString())) {
+			System.out.println(resultMap.get(ResultStatus.SUCCESS.toString()));
 			return ResponseEntity.status(HttpStatus.CREATED).body(resultMap.get(ResultStatus.SUCCESS.toString()));
 		} else {
+			System.out.println(resultMap.get(ResultStatus.FAILED.toString()));
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resultMap.get(ResultStatus.FAILED.toString()));
 		}
 	}
