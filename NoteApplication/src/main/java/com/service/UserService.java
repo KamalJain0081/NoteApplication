@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,9 +49,7 @@ public class UserService implements UserServiceInterface {
 			user.setCreatedAt(LocalDateTime.now());
 			user.setUpdatedAt(LocalDateTime.now());
 
-			Users insertedUser = userRepository.save(user);
-
-			if (insertedUser != null) {
+			if (userRepository.save(user) != null) {
 				map.put(ResultStatus.SUCCESS.toString(), "user inserted successfully");
 			} else {
 				map.put(ResultStatus.FAILED.toString(), "user insertion failed");
@@ -66,24 +63,48 @@ public class UserService implements UserServiceInterface {
 
 	@Override
 	@Transactional
-	public void updateUserData(UserRequestDto userRequestDto) {
-		Users oldUser = userRepository.findByEmail(userRequestDto.getEmail())
-				.orElseThrow(() -> new UsernameNotFoundException("User with Email " + userRequestDto.getEmail() + "Not Found."));;
+	public Map<String, String> updateUserData(UserRequestDto userRequestDto) {
+		Map<String, String> map = new HashMap<String, String>();
+		Users oldUser = userRepository.findByEmail(userRequestDto.getEmail()).get();
+		
+		if (oldUser == null) {
+			map.put(ResultStatus.FAILED.toString(), "user with email : "+ userRequestDto.getEmail() +" not found");
+			return map;
+		}
+//				.orElseThrow(() -> new UsernameNotFoundException("User with Email " + userRequestDto.getEmail() + "Not Found."));;
 		oldUser.setName(userRequestDto.getName());
 		oldUser.setPassword(userRequestDto.getPassword());
 		oldUser.setUpdatedAt(LocalDateTime.now());
-		userRepository.save(oldUser);
+		
+		if (userRepository.save(oldUser) != null) {
+			map.put(ResultStatus.SUCCESS.toString(), "user updated successfully");
+		} else {
+			map.put(ResultStatus.FAILED.toString(), "user updation failed");
+		}
+		
+		return map;
 	}
 	
-	public UserResponseDto getUserProfile(String email) {
+	public Map<String, String> getUserProfile(String email) {
+		Map<String, String> map = new HashMap<String, String>();
 		UserResponseDto userResponse = new UserResponseDto();
-		Users existingUser = userRepository.findByEmail(email)
-				.orElseThrow(() -> new UsernameNotFoundException("User with Email " + email + "Not Found."));
+		Users existingUser = userRepository.findByEmail(email).get();
+		
+		if (existingUser == null) {
+			map.put(ResultStatus.FAILED.toString(), "user with email : "+ email +" not found");
+			return map;
+		}
+//				.orElseThrow(() -> new UsernameNotFoundException("User with Email " + email + "Not Found."));
 		userResponse.setUserId(existingUser.getUserId());
 		userResponse.setName(existingUser.getName());
 		userResponse.setEmail(existingUser.getEmail());
 		userResponse.setIsActive(existingUser.getIsActive());
-		return userResponse;
+		userResponse.setCreatedAt(existingUser.getCreatedAt());;
+		userResponse.setUpdatedAt(existingUser.getUpdatedAt());
+		
+		map.put(ResultStatus.FAILED.toString(), userResponse.toString());
+		
+		return map;
 	}
 
 }

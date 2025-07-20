@@ -53,4 +53,10 @@ public class UserResponseDto {
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
+	@Override
+	public String toString() {
+		return "UserResponseDto [userId=" + userId + ", name=" + name + ", email=" + email + ", createdAt=" + createdAt
+				+ ", updatedAt=" + updatedAt + ", isActive=" + isActive + "]";
+	}
+    
 }
