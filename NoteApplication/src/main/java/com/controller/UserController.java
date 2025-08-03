@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dto.UserRequestDto;
@@ -40,17 +41,13 @@ public class UserController
 		}
 	}
 	
-	@GetMapping("/profile")
-	public ResponseEntity<String> getUserProfile(String email){
-		Map<String, String> resultMap = new HashMap<String, String>();
-		resultMap = userService.getUserProfile(email);
-		
-		if (resultMap.containsKey(ResultStatus.SUCCESS.toString())) {
-			System.out.println(resultMap.get(ResultStatus.SUCCESS.toString()));
-			return ResponseEntity.status(HttpStatus.OK).body(resultMap.get(ResultStatus.SUCCESS.toString()));
-		} else {
-			System.out.println(resultMap.get(ResultStatus.FAILED.toString()));
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap.get(ResultStatus.FAILED.toString()));
+	@GetMapping("/profile/{email}")
+	public ResponseEntity<?> getUserProfile(@RequestParam("email") String email){
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(userService.getUserProfile(email));
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
 		}
 	}
 

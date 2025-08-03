@@ -1,14 +1,21 @@
 package com.dto;
 
-public class NoteRequestDto {
+import java.time.LocalDateTime;
 
+public class NoteRequestDto {
+	
+	private Long noteId;
     private String noteTitle;
     private String content;
     private Boolean notification;
     private Long groupId;
     private String noteColor;
     private Boolean isPublic;
-
+    private Long userId;
+    private Integer[] sharedWith;
+    private Integer[] notifyUsers;
+    private LocalDateTime notificationAt;
+    
     public String getNoteTitle() {
         return noteTitle;
     }
@@ -50,4 +57,35 @@ public class NoteRequestDto {
     public void setIsPublic(Boolean isPublic) {
         this.isPublic = isPublic;
     }
+    
+    public Long getUserId() {
+        return userId;
+    }
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+	public Integer[] getSharedWith() {
+		return sharedWith;
+	}
+	public void setSharedWith(Integer[] sharedWith) {
+		this.sharedWith = sharedWith;
+	}
+	public Integer[] getNotifyUsers() {
+		return notifyUsers;
+	}
+	public void setNotifyUsers(Integer[] notifyUsers) {
+		this.notifyUsers = notifyUsers;
+	}
+	public LocalDateTime getNotificationAt() {
+		return notificationAt;
+	}
+	public void setNotificationAt(LocalDateTime notificationAt) {
+		this.notificationAt = notificationAt;
+	}
+	public Long getNoteId() {
+		return noteId;
+	}
+	public void setNoteId(Long noteId) {
+		this.noteId = noteId;
+	}
 }

@@ -21,9 +21,8 @@ public class Note {
     @Column(name = "notification", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private Boolean notification = false;
 
-    @ManyToOne
-    @JoinColumn(name = "group_id")
-    private Group group;
+    @Column(name = "group_id")
+    private Long group_id;
 
     @Column(name = "note_color", length = 50)
     private String noteColor;
@@ -70,11 +69,11 @@ public class Note {
         this.notification = notification;
     }
 
-    public Group getGroup() {
-        return group;
+    public Long getGroupId() {
+        return group_id;
     }
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setGroupId(Long group_id) {
+        this.group_id = group_id;
     }
 
     public String getNoteColor() {
@@ -108,7 +107,7 @@ public class Note {
 	@Override
 	public String toString() {
 		return "Note [noteId=" + noteId + ", noteTitle=" + noteTitle + ", content=" + content + ", notification="
-				+ notification + ", group=" + group + ", noteColor=" + noteColor + ", createdAt=" + createdAt
+				+ notification + ", group=" + group_id + ", noteColor=" + noteColor + ", createdAt=" + createdAt
 				+ ", updatedAt=" + updatedAt + ", isPublic=" + isPublic + "]";
 	}
     

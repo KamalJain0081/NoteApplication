@@ -98,6 +98,8 @@ public class UserService implements UserServiceInterface {
 		userResponse.setUserId(existingUser.getUserId());
 		userResponse.setName(existingUser.getName());
 		userResponse.setEmail(existingUser.getEmail());
+		userResponse.setCreatedAt(existingUser.getCreatedAt());
+		userResponse.setUpdatedAt(existingUser.getUpdatedAt());
 		userResponse.setIsActive(existingUser.getIsActive());
 		userResponse.setCreatedAt(existingUser.getCreatedAt());;
 		userResponse.setUpdatedAt(existingUser.getUpdatedAt());
